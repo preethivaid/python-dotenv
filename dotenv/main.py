@@ -126,7 +126,7 @@ def get_key(dotenv_path, key_to_get):
     return DotEnv(dotenv_path, verbose=True).get(key_to_get)
 
 
-def set_key(dotenv_path, key_to_set, value_to_set, quote_mode="always"):
+def set_key(dotenv_path, key_to_set, value_to_set, quote_mode=True):
     """
     Adds or Updates a key/value to the given .env
 
@@ -138,10 +138,7 @@ def set_key(dotenv_path, key_to_set, value_to_set, quote_mode="always"):
         warnings.warn("can't write to %s - it doesn't exist." % dotenv_path)
         return None, key_to_set, value_to_set
 
-    if " " in value_to_set:
-        quote_mode = "always"
-
-    line_template = '{}="{}"' if quote_mode == "always" else '{}={}'
+    line_template = '{}="{}"' if quote_mode else '{}={}'
     line_out = line_template.format(key_to_set, value_to_set)
 
     replaced = False
